@@ -30,6 +30,33 @@
 #include "LIDARLite_v3HP.h"
 
 /*------------------------------------------------------------------------------
+  Begin
+
+  Starts the sensor and I2C.
+
+  Parameters
+  ------------------------------------------------------------------------------
+  configuration: Default 0. Selects one of several preset configurations.
+  fasti2c: Default 100 kHz. I2C base frequency.
+    If true I2C frequency is set to 400kHz.
+  lidarliteAddress: Default 0x62. Fill in new address here if changed. See
+    operating manual for instructions.
+------------------------------------------------------------------------------*/
+void LIDARLite_v3HP::begin(int configuration, bool fasti2c, char lidarliteAddress)
+{
+  Wire.begin(); // Start I2C
+  if(fasti2c)
+  {
+    #if ARDUINO >= 157
+      Wire.setClock(400000UL); // Set I2C frequency to 400kHz, for Arduino Due
+    #else
+      TWBR = ((F_CPU / 400000UL) - 16) / 2; // Set I2C frequency to 400kHz
+    #endif
+  }
+  configure(configuration, lidarliteAddress); // Configuration settings
+} /* LIDARLite::begin */
+
+/*------------------------------------------------------------------------------
   Configure
 
   Selects one of several preset configurations.

@@ -33,6 +33,7 @@
 class LIDARLite_v3HP
 {
   public:
+      void      begin       (int = 0, bool = false, char = LIDARLITE_ADDR_DEFAULT);
       void      configure   (uint8_t configuration = 0, uint8_t lidarliteAddress = LIDARLITE_ADDR_DEFAULT);
 
       void      setI2Caddr  (uint8_t newAddress, uint8_t disableDefault, uint8_t lidarliteAddress = LIDARLITE_ADDR_DEFAULT);
